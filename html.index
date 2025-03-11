@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노트북 사양 선택</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 0 10px;
+        }
+        h2 {
+            font-size: 1.5em;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #e60000;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .footer-text {
+            margin-top: 30px;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            body {
+                margin: 10px;
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            label {
+                font-size: 0.9em;
+            }
+            select, button {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            .container {
+                padding: 0 5px;
+            }
+            .footer-text {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>원하는 노트북 사양을 선택하세요</h2>
+        
+        <label>가격</label>
+        <select id="price">
+            <option value="">선택</option>
+            <option value="63">63만원 이하</option>
+            <option value="126">63만원~126만원</option>
+            <option value="189">126만원~189만원</option>
+            <option value="252">189만원~252만원</option>
+            <option value="252+">252만원 이상</option>
+        </select>
+        
+        <label>CPU 세대</label>
+        <select id="cpuGen">
+            <option value="">선택</option>
+            <option value="intel14">인텔 14세대</option>
+            <option value="intel13">인텔 13세대</option>
+            <option value="intel12">인텔 12세대</option>
+            <option value="intel11">인텔 11세대</option>
+            <option value="ryzen7000">라이젠 7000 시리즈</option>
+            <option value="ryzen6000">라이젠 6000 시리즈</option>
+        </select>
+        
+        <label>CPU</label>
+        <select id="cpu">
+            <option value="">선택</option>
+            <option value="i3">코어 i3</option>
+            <option value="i5">코어 i5</option>
+            <option value="i7">코어 i7</option>
+            <option value="ryzen5">라이젠 5</option>
+            <option value="ryzen7">라이젠 7</option>
+        </select>
+        
+        <label>메모리 용량</label>
+        <select id="ram">
+            <option value="">선택</option>
+            <option value="8GB">8GB</option>
+            <option value="16GB">16GB</option>
+            <option value="32GB">32GB 이상</option>
+        </select>
+        
+        <label>저장 용량</label>
+        <select id="storage">
+            <option value="">선택</option>
+            <option value="256GB">256GB</option>
+            <option value="512GB">512GB~1TB</option>
+            <option value="2TB">2TB 이상</option>
+        </select>
+        
+        <label>저장장치 종류</label>
+        <select id="storageType">
+            <option value="">선택</option>
+            <option value="SSD">SSD</option>
+            <option value="HDD">HDD</option>
+            <option value="NVMe">NVMe</option>
+        </select>
+        
+        <label>그래픽카드</label>
+        <select id="gpu">
+            <option value="">선택</option>
+            <option value="rtx3060">RTX 3060</option>
+            <option value="rtx3070">RTX 3070</option>
+            <option value="rtx4060">RTX 4060</option>
+        </select>
+        
+        <label>운영체제</label>
+        <select id="os">
+            <option value="">선택</option>
+            <option value="win11">Windows 11</option>
+            <option value="macos">MacOS</option>
+            <option value="chromeos">Chrome OS</option>
+        </select>
+        
+        <label>화면크기</label>
+        <select id="screenSize">
+            <option value="">선택</option>
+            <option value="13">13인치</option>
+            <option value="15">15인치</option>
+            <option value="17">17인치 이상</option>
+        </select>
+        
+        <label>무게</label>
+        <select id="weight">
+            <option value="">선택</option>
+            <option value="1kg">1kg 이하</option>
+            <option value="1.3kg">1~1.3kg</option>
+            <option value="2kg">1.7~2kg</option>
+        </select>
+        
+        <label>브랜드</label>
+        <select id="brand">
+            <option value="">선택</option>
+            <option value="LG">LG전자</option>
+            <option value="Samsung">삼성전자</option>
+            <option value="Apple">Apple</option>
+            <option value="Lenovo">레노버</option>
+        </select>
+        
+        <button onclick="filterLaptops()">노트북 검색</button>
+        
+        <div id="result"></div>
+
+        <!-- 하단 문구 추가 -->
+        <div class="footer-text">
+            이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+        </div>
+    </div>
+
+    <script>
+        function filterLaptops() {
+            // 선택된 값 가져오기
+            const price = document.getElementById("price").options[document.getElementById("price").selectedIndex].text || "";
+            const cpuGen = document.getElementById("cpuGen").options[document.getElementById("cpuGen").selectedIndex].text || "";
+            const cpu = document.getElementById("cpu").options[document.getElementById("cpu").selectedIndex].text || "";
+            const ram = document.getElementById("ram").options[document.getElementById("ram").selectedIndex].text || "";
+            const storage = document.getElementById("storage").options[document.getElementById("storage").selectedIndex].text || "";
+            const storageType = document.getElementById("storageType").options[document.getElementById("storageType").selectedIndex].text || "";
+            const gpu = document.getElementById("gpu").options[document.getElementById("gpu").selectedIndex].text || "";
+            const os = document.getElementById("os").options[document.getElementById("os").selectedIndex].text || "";
+            const screenSize = document.getElementById("screenSize").options[document.getElementById("screenSize").selectedIndex].text || "";
+            const weight = document.getElementById("weight").options[document.getElementById("weight").selectedIndex].text || "";
+            const brand = document.getElementById("brand").options[document.getElementById("brand").selectedIndex].text || "";
+
+            // 결과 메시지
+            document.getElementById("result").innerHTML = "선택한 사양에 맞는 노트북을 검색 중입니다...";
+
+            // 검색어 배열 생성 (빈 값 제외)
+            const searchTerms = [brand, cpuGen, cpu, ram, storage, storageType, gpu, os, screenSize, weight, price].filter(term => term !== "" && term !== "선택");
+
+            // 검색 쿼리 생성
+            let searchQuery = "노트북";
+            if (searchTerms.length > 0) {
+                searchQuery += " " + searchTerms.join(" ");
+            }
+
+            // 쿠팡 검색 URL 생성
+            const coupangUrl = `https://www.coupang.com/np/search?q=${encodeURIComponent(searchQuery)}`;
+
+            // 새 창으로 열기
+            window.open(coupangUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
